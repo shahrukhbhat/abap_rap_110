@@ -35,8 +35,31 @@ CLASS lhc_booking IMPLEMENTATION.
   METHOD setInitialBookingValues.
   ENDMETHOD.
 
-  METHOD validateBookingStatus.
-  ENDMETHOD.
+   METHOD validateBookingStatus.
+  READ ENTITIES OF ZRAP110_R_TravelTP_039 IN LOCAL MODE
+     ENTITY booking
+       FIELDS ( BookingStatus )
+       WITH CORRESPONDING #( keys )
+     RESULT DATA(bookings).
+
+  LOOP AT bookings INTO DATA(booking).
+    CASE booking-BookingStatus.
+      WHEN booking_status-new.      " New
+      WHEN booking_status-canceled. " Canceled
+      WHEN booking_status-booked.   " Booked
+      WHEN OTHERS.
+        APPEND VALUE #( %tky = booking-%tky ) TO failed-booking.
+        APPEND VALUE #( %tky = booking-%tky
+                        %msg = NEW /dmo/cm_flight_messages(
+                                   textid      = /dmo/cm_flight_messages=>status_invalid
+                                   status      = booking-BookingStatus
+                                   severity    = if_abap_behv_message=>severity-error )
+                        %element-BookingStatus = if_abap_behv=>mk-on
+                        %path = VALUE #( travel-TravelId    = booking-TravelId )
+                      ) TO reported-booking.
+    ENDCASE.
+  ENDLOOP.
+ ENDMETHOD.
 
 ENDCLASS.
 
