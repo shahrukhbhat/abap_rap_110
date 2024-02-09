@@ -2,17 +2,17 @@ managed implementation in class zrap110_BP_TravelTP_039 unique;
 strict ( 2 );
 with draft;
 define behavior for ZRAP110_R_TRAVELTP_039 alias Travel
-persistent table ZRAP110_ATRAV039
-draft table ZRAP110_DTRAV039
+persistent table zrap110_atrav039
+draft table zrap110_dtrav039
 etag master LocalLastChangedAt
 lock master total etag LastChangedAt
-authorization master( global )
+authorization master ( global )
 late numbering
-
+with additional save with full data
 {
   field ( readonly )
-   LocalLastChangedAt,
-   LastChangedAt;
+  LocalLastChangedAt,
+  LastChangedAt;
 
   field ( readonly ) TravelID;
   field ( readonly ) TotalPrice;
@@ -22,11 +22,23 @@ late numbering
   update ( features : instance );
   delete ( features : instance );
 
+  //side effects
+  side effects
+  {
+    field BookingFee affects field TotalPrice;
+    field CurrencyCode affects field TotalPrice;
+    determine action checkDates executed on field BeginDate, field EndDate affects messages;
+  }
+
+    //business events
+  event travel_accepted parameter ZRAP110_A_Travel_039;
+  event travel_rejected;
+
   //action(s)
   action ( features : instance ) acceptTravel result [1] $self;
   action ( features : instance ) rejectTravel result [1] $self;
   internal action recalcTotalPrice;
-  static factory action createTravel parameter ZRAP110_A_Create_Travel_039 [1];
+  static default factory action createTravel parameter ZRAP110_A_Create_Travel_039 [1];
   determine action checkDates
   {
     validation validateDates;
@@ -37,7 +49,7 @@ late numbering
   validation validateAgency on save { create; field AgencyID; }
   validation validateDates on save { create; field BeginDate, EndDate; }
 
-   //determination(s)
+  //determination(s)
   determination setInitialTravelValues on modify { create; }
   determination calculateTotalPrice on modify { create; field BookingFee, CurrencyCode; }
 
@@ -53,36 +65,36 @@ late numbering
     validation Booking~validateBookingStatus;
   }
 
-  mapping for ZRAP110_ATRAV039
-  {
-    TravelID = TRAVEL_ID;
-    AgencyID = AGENCY_ID;
-    CustomerID = CUSTOMER_ID;
-    BeginDate = BEGIN_DATE;
-    EndDate = END_DATE;
-    BookingFee = BOOKING_FEE;
-    TotalPrice = TOTAL_PRICE;
-    CurrencyCode = CURRENCY_CODE;
-    Description = DESCRIPTION;
-    Attachment = ATTACHMENT;
-    MimeType = MIME_TYPE;
-    FileName = FILE_NAME;
-    OverallStatus = OVERALL_STATUS;
-    CreatedBy = CREATED_BY;
-    CreatedAt = CREATED_AT;
-    LocalLastChangedBy = LOCAL_LAST_CHANGED_BY;
-    LocalLastChangedAt = LOCAL_LAST_CHANGED_AT;
-    LastChangedAt = LAST_CHANGED_AT;
-  }
+  mapping for zrap110_atrav039
+    {
+      TravelID           = TRAVEL_ID;
+      AgencyID           = AGENCY_ID;
+      CustomerID         = CUSTOMER_ID;
+      BeginDate          = BEGIN_DATE;
+      EndDate            = END_DATE;
+      BookingFee         = BOOKING_FEE;
+      TotalPrice         = TOTAL_PRICE;
+      CurrencyCode       = CURRENCY_CODE;
+      Description        = DESCRIPTION;
+      Attachment         = ATTACHMENT;
+      MimeType           = MIME_TYPE;
+      FileName           = FILE_NAME;
+      OverallStatus      = OVERALL_STATUS;
+      CreatedBy          = CREATED_BY;
+      CreatedAt          = CREATED_AT;
+      LocalLastChangedBy = LOCAL_LAST_CHANGED_BY;
+      LocalLastChangedAt = LOCAL_LAST_CHANGED_AT;
+      LastChangedAt      = LAST_CHANGED_AT;
+    }
 
   // create booking by association
-  association _Booking { create ( features:instance ); with draft; }
+  association _Booking { create ( features : instance ); with draft; }
 }
 
 define behavior for ZRAP110_R_BOOKINGTP_039 alias Booking
 implementation in class zrap110_BP_BookingTP_039 unique
-persistent table ZRAP110_ABOOK039
-draft table ZRAP110_DBOOK039
+persistent table zrap110_abook039
+draft table zrap110_dbook039
 etag master LocalLastChangedAt
 lock dependent by _Travel
 authorization dependent by _Travel
@@ -90,10 +102,10 @@ late numbering
 
 {
   field ( readonly )
-   TravelID,
-   LocalLastChangedAt;
+  TravelID,
+  LocalLastChangedAt;
 
- //static field control
+  //static field control
   field ( readonly ) BookingID;
   field ( mandatory ) CustomerID, CarrierID, Flightdate, BookingStatus;
 
@@ -107,23 +119,30 @@ late numbering
   determination setInitialBookingValues on modify { create; } //copy & paste
   determination calculateTotalPrice on modify { create; field FlightPrice, CurrencyCode; }  //**
 
+  //side effects for a target entity
+  side effects
+  {
+    field FlightPrice affects field _Travel.TotalPrice;
+    field CurrencyCode affects field _Travel.TotalPrice;
+  }
+
   //function(s)
   function getDaysToFlight result [1] ZRAP110_A_DaysToFlight_039;
 
-  mapping for ZRAP110_ABOOK039
-  {
-    TravelID = TRAVEL_ID;
-    BookingID = BOOKING_ID;
-    BookingDate = BOOKING_DATE;
-    CustomerID = CUSTOMER_ID;
-    CarrierID = CARRIER_ID;
-    ConnectionID = CONNECTION_ID;
-    FlightDate = FLIGHT_DATE;
-    FlightPrice = FLIGHT_PRICE;
-    CurrencyCode = CURRENCY_CODE;
-    BookingStatus = BOOKING_STATUS;
-    LocalLastChangedAt = LOCAL_LAST_CHANGED_AT;
-  }
+  mapping for zrap110_abook039
+    {
+      TravelID           = TRAVEL_ID;
+      BookingID          = BOOKING_ID;
+      BookingDate        = BOOKING_DATE;
+      CustomerID         = CUSTOMER_ID;
+      CarrierID          = CARRIER_ID;
+      ConnectionID       = CONNECTION_ID;
+      FlightDate         = FLIGHT_DATE;
+      FlightPrice        = FLIGHT_PRICE;
+      CurrencyCode       = CURRENCY_CODE;
+      BookingStatus      = BOOKING_STATUS;
+      LocalLastChangedAt = LOCAL_LAST_CHANGED_AT;
+    }
 
   association _Travel { with draft; }
 }

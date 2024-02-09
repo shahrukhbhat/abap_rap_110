@@ -20,7 +20,7 @@ METHOD IF_OO_ADT_CLASSRUN~MAIN.
      DATA travel_keys TYPE TABLE FOR READ IMPORT ZRAP110_R_TravelTP_039 .
 
      "fill in relevant travel keys for READ request
-     travel_keys = VALUE #( ( TravelID = 'xxxxx' )
+     travel_keys = VALUE #( ( TravelID = '4140' )
                            "( TravelID = '...' )
                           ).
 
@@ -49,21 +49,21 @@ METHOD IF_OO_ADT_CLASSRUN~MAIN.
         RESULT DATA(lt_bookings_read)
     LINK DATA(travels_to_bookings).
 
-*    "execute function getDaysToFlight
-*    READ ENTITIES OF ZRAP110_R_TravelTP_039
-*      ENTITY Booking
-*        EXECUTE getDaysToFlight
-*          FROM VALUE #( FOR link IN travels_to_bookings ( %tky = link-target-%tky ) )
-*    RESULT DATA(days_to_flight).
-*
-*    "output result structure
-*    LOOP AT days_to_flight ASSIGNING FIELD-SYMBOL(<days_to_flight>).
-*      out->write( | TravelID = { <days_to_flight>-%tky-TravelID } |  ).
-*      out->write( | BookingID = { <days_to_flight>-%tky-BookingID } | ).
-*      out->write( | RemainingDaysToFlight  = { <days_to_flight>-%param-remaining_days_to_flight } | ).
-*      out->write( | InitialDaysToFlight = { <days_to_flight>-%param-initial_days_to_flight } | ).
-*      out->write( | ---------------           | ).
-*    ENDLOOP.
+    "execute function getDaysToFlight
+    READ ENTITIES OF ZRAP110_R_TravelTP_039
+      ENTITY Booking
+        EXECUTE getDaysToFlight
+          FROM VALUE #( FOR link IN travels_to_bookings ( %tky = link-target-%tky ) )
+    RESULT DATA(days_to_flight).
+
+    "output result structure
+    LOOP AT days_to_flight ASSIGNING FIELD-SYMBOL(<days_to_flight>).
+      out->write( | TravelID = { <days_to_flight>-%tky-TravelID } |  ).
+      out->write( | BookingID = { <days_to_flight>-%tky-BookingID } | ).
+      out->write( | RemainingDaysToFlight  = { <days_to_flight>-%param-remaining_days_to_flight } | ).
+      out->write( | InitialDaysToFlight = { <days_to_flight>-%param-initial_days_to_flight } | ).
+      out->write( | ---------------           | ).
+    ENDLOOP.
 
 ENDMETHOD.
 ENDCLASS.
