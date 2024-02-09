@@ -64,6 +64,7 @@ METHOD IF_OO_ADT_CLASSRUN~MAIN.
       out->write( | InitialDaysToFlight = { <days_to_flight>-%param-initial_days_to_flight } | ).
       out->write( | ---------------           | ).
     ENDLOOP.
+*#################################Ignore
 
 ENDMETHOD.
 ENDCLASS.

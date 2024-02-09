@@ -82,6 +82,12 @@
      <MASK>  UTCL</MASK>
     </DD03P>
    </DD03P_TABLE>
+   <TABL_EXTRAS>
+    <TDDAT>
+     <TABNAME>ZRAP110_ETRAV039</TABNAME>
+     <CCLASS>CUS_DEV_SUP_DA</CCLASS>
+    </TDDAT>
+   </TABL_EXTRAS>
   </asx:values>
  </asx:abap>
 </abapGit>
