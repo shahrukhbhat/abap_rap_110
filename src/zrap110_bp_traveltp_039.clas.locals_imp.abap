@@ -172,6 +172,29 @@ ENDCLASS.
 
 CLASS lhc_travel IMPLEMENTATION.
   METHOD get_global_authorizations.
+    IF requested_authorizations-%create EQ if_abap_behv=>mk-on.
+*     check create authorization
+      AUTHORITY-CHECK OBJECT 'ZOSTAT039' ID 'ACTVT' FIELD '01'.
+      result-%create = COND #( WHEN sy-subrc = 0 THEN
+      if_abap_behv=>auth-allowed ELSE
+      if_abap_behv=>auth-unauthorized ).
+    ENDIF.
+
+    IF requested_authorizations-%update EQ if_abap_behv=>mk-on.
+*     check update authorization
+      AUTHORITY-CHECK OBJECT 'ZOSTAT039' ID 'ACTVT' FIELD '02'.
+      result-%update = COND #( WHEN sy-subrc = 0 THEN
+      if_abap_behv=>auth-allowed ELSE
+      if_abap_behv=>auth-unauthorized ).
+    ENDIF.
+
+    IF requested_authorizations-%delete EQ if_abap_behv=>mk-on.
+*     check delete authorization
+      AUTHORITY-CHECK OBJECT 'ZOSTAT039' ID 'ACTVT' FIELD '06'.
+      result-%delete = COND #( WHEN sy-subrc = 0 THEN
+      if_abap_behv=>auth-allowed ELSE
+      if_abap_behv=>auth-unauthorized ).
+    ENDIF.
   ENDMETHOD.
 **************************************************************************
 * Instance-bound dynamic feature control

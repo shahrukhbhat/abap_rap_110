@@ -1,6 +1,10 @@
 managed implementation in class zrap110_BP_TravelTP_039 unique;
 strict ( 2 );
 with draft;
+define own authorization context
+{
+  'ZOSTAT039';
+}
 define behavior for ZRAP110_R_TRAVELTP_039 alias Travel
 persistent table zrap110_atrav039
 draft table zrap110_dtrav039
@@ -9,6 +13,7 @@ lock master total etag LastChangedAt
 authorization master ( global )
 late numbering
 with additional save with full data
+
 {
   field ( readonly )
   LocalLastChangedAt,

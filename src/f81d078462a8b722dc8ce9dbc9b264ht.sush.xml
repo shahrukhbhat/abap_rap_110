@@ -16,7 +16,43 @@
      <OBJECT>S_START</OBJECT>
      <OKFLAG>X</OKFLAG>
     </USOBX>
+    <USOBX>
+     <NAME>F81D078462A8B722DC8CE9DBC9B264</NAME>
+     <TYPE>HT</TYPE>
+     <OBJECT>ZOSTAT039</OBJECT>
+     <OKFLAG>Y</OKFLAG>
+    </USOBX>
    </USOBX>
+   <USOBT>
+    <USOBT>
+     <NAME>F81D078462A8B722DC8CE9DBC9B264</NAME>
+     <TYPE>HT</TYPE>
+     <OBJECT>ZOSTAT039</OBJECT>
+     <FIELD>ACTVT</FIELD>
+     <LOW>01</LOW>
+    </USOBT>
+    <USOBT>
+     <NAME>F81D078462A8B722DC8CE9DBC9B264</NAME>
+     <TYPE>HT</TYPE>
+     <OBJECT>ZOSTAT039</OBJECT>
+     <FIELD>ACTVT</FIELD>
+     <LOW>02</LOW>
+    </USOBT>
+    <USOBT>
+     <NAME>F81D078462A8B722DC8CE9DBC9B264</NAME>
+     <TYPE>HT</TYPE>
+     <OBJECT>ZOSTAT039</OBJECT>
+     <FIELD>ACTVT</FIELD>
+     <LOW>03</LOW>
+    </USOBT>
+    <USOBT>
+     <NAME>F81D078462A8B722DC8CE9DBC9B264</NAME>
+     <TYPE>HT</TYPE>
+     <OBJECT>ZOSTAT039</OBJECT>
+     <FIELD>ACTVT</FIELD>
+     <LOW>06</LOW>
+    </USOBT>
+   </USOBT>
    <USOBX_EXT>
     <item>
      <OBJECT>S_START</OBJECT>
@@ -32,7 +68,46 @@
      <EXCEP_TX>Okay</EXCEP_TX>
      <EXCEP_ICON>@08@</EXCEP_ICON>
     </item>
+    <item>
+     <OBJECT>ZOSTAT039</OBJECT>
+     <TTEXT>ZOSTAT039</TTEXT>
+     <OCLSS>CPAE</OCLSS>
+     <OKFLAG>Y</OKFLAG>
+     <DEVCLASS>ZRAP110_039</DEVCLASS>
+     <CI_TEXT>Check/Maintain</CI_TEXT>
+     <CH_TEXT>Check</CH_TEXT>
+     <PR_TEXT>Yes</PR_TEXT>
+     <EXCEP>3</EXCEP>
+     <EXCEP_TX>Okay</EXCEP_TX>
+     <EXCEP_ICON>@08@</EXCEP_ICON>
+    </item>
    </USOBX_EXT>
+   <USOBT_EXT>
+    <item>
+     <OBJECT>ZOSTAT039</OBJECT>
+     <TTEXT>ZOSTAT039</TTEXT>
+     <FIELD>ACTVT</FIELD>
+     <LOW>01</LOW>
+    </item>
+    <item>
+     <OBJECT>ZOSTAT039</OBJECT>
+     <TTEXT>ZOSTAT039</TTEXT>
+     <FIELD>ACTVT</FIELD>
+     <LOW>02</LOW>
+    </item>
+    <item>
+     <OBJECT>ZOSTAT039</OBJECT>
+     <TTEXT>ZOSTAT039</TTEXT>
+     <FIELD>ACTVT</FIELD>
+     <LOW>03</LOW>
+    </item>
+    <item>
+     <OBJECT>ZOSTAT039</OBJECT>
+     <TTEXT>ZOSTAT039</TTEXT>
+     <FIELD>ACTVT</FIELD>
+     <LOW>06</LOW>
+    </item>
+   </USOBT_EXT>
   </asx:values>
  </asx:abap>
 </abapGit>

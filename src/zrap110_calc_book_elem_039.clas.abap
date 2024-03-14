@@ -14,7 +14,10 @@ CLASS zrap110_calc_book_elem_039 DEFINITION
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS zrap110_calc_book_elem_039 IMPLEMENTATION.
+
+
+CLASS ZRAP110_CALC_BOOK_ELEM_039 IMPLEMENTATION.
+
 
   METHOD if_sadl_exit_calc_element_read~calculate.
     IF it_requested_calc_elements IS INITIAL.
@@ -57,6 +60,7 @@ CLASS zrap110_calc_book_elem_039 IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
+
 
   METHOD calculate_days_to_flight.
     DATA(today) = cl_abap_context_info=>get_system_date( ).
@@ -104,5 +108,4 @@ CLASS zrap110_calc_book_elem_039 IMPLEMENTATION.
       WHEN OTHERS.
     ENDCASE.
   ENDMETHOD.
-
 ENDCLASS.
